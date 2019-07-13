@@ -1,148 +1,116 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from datetime import datetime # å¯¼å…¥æ—¶é—´å¤„ç†æ¨¡å—datetime
-from base import BaseFeedBook # ç»§æ‰¿åŸºç±»BaseFeedBook
-from lib.urlopener import URLOpener # å¯¼å…¥è¯·æ±‚URLè·å–é¡µé¢å†…å®¹çš„æ¨¡å—
-from bs4 import BeautifulSoup # å¯¼å…¥BeautifulSoupå¤„ç†æ¨¡å—
+from datetime import datetime # µ¼ÈëÊ±¼ä´¦ÀíÄ£¿édatetime
+from base import BaseFeedBook # ¼Ì³Ğ»ùÀàBaseFeedBook
+from lib.urlopener import URLOpener # µ¼ÈëÇëÇóURL»ñÈ¡Ò³ÃæÄÚÈİµÄÄ£¿é
+from bs4 import BeautifulSoup # µ¼ÈëBeautifulSoup´¦ÀíÄ£¿é
 
-# è¿”å›æ­¤è„šæœ¬å®šä¹‰çš„ç±»å
+# ·µ»Ø´Ë½Å±¾¶¨ÒåµÄÀàÃû
 def getBook():
     return ChinaDaily
 
-# ç»§æ‰¿åŸºç±»BaseFeedBook
+# ¼Ì³Ğ»ùÀàBaseFeedBook
 class ChinaDaily(BaseFeedBook):
-    # è®¾å®šç”Ÿæˆç”µå­ä¹¦çš„å…ƒæ•°æ®
-    title = u'China Daily' # è®¾å®šæ ‡é¢˜
-    __author__ = u'China Daily' # è®¾å®šä½œè€…
-    description = u'Chinadaily.com.cn is the largest English portal in China. ' # è®¾å®šç®€ä»‹
-    language = 'en' # è®¾å®šè¯­è¨€
+    # Éè¶¨Éú³Éµç×ÓÊéµÄÔªÊı¾İ
+    title = u'China Daily' # Éè¶¨±êÌâ
+    __author__ = u'China Daily' # Éè¶¨×÷Õß
+    description = u'Chinadaily.com.cn is the largest English portal in China. ' # Éè¶¨¼ò½é
+    language = 'en' # Éè¶¨ÓïÑÔ
 
-    coverfile = 'cv_chinadaily.jpg' # è®¾å®šå°é¢å›¾ç‰‡
-    mastheadfile = 'mh_chinadaily.gif' # è®¾å®šæ ‡å¤´å›¾ç‰‡
+    coverfile = 'cv_chinadaily.jpg' # Éè¶¨·âÃæÍ¼Æ¬
+    mastheadfile = 'mh_chinadaily.gif' # Éè¶¨±êÍ·Í¼Æ¬
 
-    # æŒ‡å®šè¦æå–çš„åŒ…å«æ–‡ç« åˆ—è¡¨çš„ä¸»é¢˜é¡µé¢é“¾æ¥
-    # æ¯ä¸ªä¸»é¢˜æ˜¯åŒ…å«ä¸»é¢˜åå’Œä¸»é¢˜é¡µé¢é“¾æ¥çš„å…ƒç»„
+    # Ö¸¶¨ÒªÌáÈ¡µÄ°üº¬ÎÄÕÂÁĞ±íµÄÖ÷ÌâÒ³ÃæÁ´½Ó
+    # Ã¿¸öÖ÷ÌâÊÇ°üº¬Ö÷ÌâÃûºÍÖ÷ÌâÒ³ÃæÁ´½ÓµÄÔª×é
     feeds = [
         (u'National affairs', 'http://www.chinadaily.com.cn/china/governmentandpolicy'),
         (u'Society', 'http://www.chinadaily.com.cn/china/society'),
     ]
 
-    page_encoding = 'utf-8' # è®¾å®šå¾…æŠ“å–é¡µé¢çš„é¡µé¢ç¼–ç 
-    fulltext_by_readability = False # è®¾å®šæ‰‹åŠ¨è§£æç½‘é¡µ
+    page_encoding = 'utf-8' # Éè¶¨´ı×¥È¡Ò³ÃæµÄÒ³Ãæ±àÂë
+    fulltext_by_readability = False # Éè¶¨ÊÖ¶¯½âÎöÍøÒ³
 
-    # è®¾å®šå†…å®¹é¡µéœ€è¦ä¿ç•™çš„æ ‡ç­¾
+    # Éè¶¨ÄÚÈİÒ³ĞèÒª±£ÁôµÄ±êÇ©
     keep_only_tags = [
         dict(name='span', class_='info_l'),
         dict(name='div', id='Content'),
     ]
 
-    max_articles_per_feed = 40 # è®¾å®šæ¯ä¸ªä¸»é¢˜ä¸‹è¦æœ€å¤šå¯æŠ“å–çš„æ–‡ç« æ•°é‡
-    oldest_article = 1 # è®¾å®šæ–‡ç« çš„æ—¶é—´èŒƒå›´ã€‚å°äºç­‰äº365åˆ™å•ä½ä¸ºå¤©ï¼Œå¦åˆ™å•ä½ä¸ºç§’ï¼Œ0ä¸ºä¸é™åˆ¶ã€‚
+    max_articles_per_feed = 40 # Éè¶¨Ã¿¸öÖ÷ÌâÏÂÒª×î¶à¿É×¥È¡µÄÎÄÕÂÊıÁ¿
+    oldest_article = 1 # Éè¶¨ÎÄÕÂµÄÊ±¼ä·¶Î§¡£Ğ¡ÓÚµÈÓÚ365Ôòµ¥Î»ÎªÌì£¬·ñÔòµ¥Î»ÎªÃë£¬0Îª²»ÏŞÖÆ¡£
 
-    # æå–æ¯ä¸ªä¸»é¢˜é¡µé¢ä¸‹æ‰€æœ‰æ–‡ç« URL
+    # ÌáÈ¡Ã¿¸öÖ÷ÌâÒ³ÃæÏÂËùÓĞÎÄÕÂURL
     def ParseFeedUrls(self):
-        urls = [] # å®šä¹‰ä¸€ä¸ªç©ºçš„åˆ—è¡¨ç”¨æ¥å­˜æ”¾æ–‡ç« å…ƒç»„
-        # å¾ªç¯å¤„ç†feesä¸­ä¸¤ä¸ªä¸»é¢˜é¡µé¢
+        urls = [] # ¶¨ÒåÒ»¸ö¿ÕµÄÁĞ±íÓÃÀ´´æ·ÅÎÄÕÂÔª×é
+        # Ñ­»·´¦ÀífeesÖĞÁ½¸öÖ÷ÌâÒ³Ãæ
         for feed in self.feeds:
-            # åˆ†åˆ«è·å–å…ƒç»„ä¸­ä¸»é¢˜çš„åç§°å’Œé“¾æ¥
+            # ·Ö±ğ»ñÈ¡Ôª×éÖĞÖ÷ÌâµÄÃû³ÆºÍÁ´½Ó
             topic, url = feed[0], feed[1]
-            # æŠŠæŠ½å–æ¯ä¸ªä¸»é¢˜é¡µé¢æ–‡ç« é“¾æ¥çš„ä»»åŠ¡äº¤ç»™è‡ªå®šä¹‰å‡½æ•°ParsePageContent()
+            # °Ñ³éÈ¡Ã¿¸öÖ÷ÌâÒ³ÃæÎÄÕÂÁ´½ÓµÄÈÎÎñ½»¸ø×Ô¶¨Òåº¯ÊıParsePageContent()
             self.ParsePageContent(topic, url, urls, count=0)
-        # print urls
-        # exit(0)
-        # è¿”å›æå–åˆ°çš„æ‰€æœ‰æ–‡ç« åˆ—è¡¨
+        print urls
+        exit(0)
+        # ·µ»ØÌáÈ¡µ½µÄËùÓĞÎÄÕÂÁĞ±í
         return urls
 
-    # è¯¥è‡ªå®šä¹‰å‡½æ•°è´Ÿè´£å•ä¸ªä¸»é¢˜ä¸‹æ‰€æœ‰æ–‡ç« é“¾æ¥çš„æŠ½å–ï¼Œå¦‚æœ‰ç¿»é¡µåˆ™ç»§ç»­å¤„ç†ä¸‹ä¸€é¡µ
+    # ¸Ã×Ô¶¨Òåº¯Êı¸ºÔğµ¥¸öÖ÷ÌâÏÂËùÓĞÎÄÕÂÁ´½ÓµÄ³éÈ¡£¬ÈçÓĞ·­Ò³Ôò¼ÌĞø´¦ÀíÏÂÒ»Ò³
     def ParsePageContent(self, topic, url, urls, count):
-        # è¯·æ±‚ä¸»é¢˜é¡µé¢é“¾æ¥å¹¶è·å–å…¶å†…å®¹
+        # ÇëÇóÖ÷ÌâÒ³ÃæÁ´½Ó²¢»ñÈ¡ÆäÄÚÈİ
         result = self.GetResponseContent(url)
-        # å¦‚æœè¯·æ±‚æˆåŠŸï¼Œå¹¶ä¸”é¡µé¢å†…å®¹ä¸ä¸ºç©º
+        # Èç¹ûÇëÇó³É¹¦£¬²¢ÇÒÒ³ÃæÄÚÈİ²»Îª¿Õ
         if result.status_code == 200 and result.content:
-            # å°†é¡µé¢å†…å®¹è½¬æ¢æˆBeatifulSoupå¯¹è±¡
+            # ½«Ò³ÃæÄÚÈİ×ª»»³ÉBeatifulSoup¶ÔÏó
             soup = BeautifulSoup(result.content, 'lxml')
-            # æ‰¾å‡ºå½“å‰é¡µé¢æ–‡ç« åˆ—è¡¨ä¸­æ‰€æœ‰æ–‡ç« æ¡ç›®
+            # ÕÒ³öµ±Ç°Ò³ÃæÎÄÕÂÁĞ±íÖĞËùÓĞÎÄÕÂÌõÄ¿
             items = soup.find_all(name='span', class_='tw3_01_2_t')
 
-            # å¾ªç¯å¤„ç†æ¯ä¸ªæ–‡ç« æ¡ç›®
+            # Ñ­»·´¦ÀíÃ¿¸öÎÄÕÂÌõÄ¿
             for item in items:
-                title = item.a.string # è·å–æ–‡ç« æ ‡é¢˜
-                link = item.a.get('href') # è·å–æ–‡ç« é“¾æ¥
-                link = BaseFeedBook.urljoin(url, link) # åˆæˆæ–‡ç« é“¾æ¥
-                count += 1 # ç»Ÿè®¡å½“å‰å·²å¤„ç†çš„æ–‡ç« æ¡ç›®
-                # å¦‚æœå¤„ç†çš„æ–‡ç« æ¡ç›®è¶…è¿‡äº†è®¾å®šæ•°é‡åˆ™ä¸­æ­¢æŠ½å–
+                title = item.a.string # »ñÈ¡ÎÄÕÂ±êÌâ
+                link = item.a.get('href') # »ñÈ¡ÎÄÕÂÁ´½Ó
+                link = BaseFeedBook.urljoin(url, link) # ºÏ³ÉÎÄÕÂÁ´½Ó
+                count += 1 # Í³¼Æµ±Ç°ÒÑ´¦ÀíµÄÎÄÕÂÌõÄ¿
+                # Èç¹û´¦ÀíµÄÎÄÕÂÌõÄ¿³¬¹ıÁËÉè¶¨ÊıÁ¿ÔòÖĞÖ¹³éÈ¡
                 if count > self.max_articles_per_feed:
                     break
-                # å¦‚æœæ–‡ç« å‘å¸ƒæ—¥æœŸè¶…å‡ºäº†è®¾å®šèŒƒå›´åˆ™å¿½ç•¥ä¸å¤„ç†
+                # Èç¹ûÎÄÕÂ·¢²¼ÈÕÆÚ³¬³öÁËÉè¶¨·¶Î§ÔòºöÂÔ²»´¦Àí
                 if self.OutTimeRange(item):
                     continue
-                # å°†ç¬¦åˆè®¾å®šæ–‡ç« æ•°é‡å’Œæ—¶é—´èŒƒå›´çš„æ–‡ç« ä¿¡æ¯ä½œä¸ºå…ƒç»„åŠ å…¥åˆ—è¡¨
+                # ½«·ûºÏÉè¶¨ÎÄÕÂÊıÁ¿ºÍÊ±¼ä·¶Î§µÄÎÄÕÂĞÅÏ¢×÷ÎªÔª×é¼ÓÈëÁĞ±í
                 urls.append((topic, title, link, None))
 
-            # å¦‚æœä¸»é¢˜é¡µé¢æœ‰ä¸‹ä¸€é¡µï¼Œä¸”å·²å¤„ç†çš„æ–‡ç« æ¡ç›®æœªè¶…è¿‡è®¾å®šæ•°é‡ï¼Œåˆ™ç»§ç»­æŠ“å–ä¸‹ä¸€é¡µ
+            # Èç¹ûÖ÷ÌâÒ³ÃæÓĞÏÂÒ»Ò³£¬ÇÒÒÑ´¦ÀíµÄÎÄÕÂÌõÄ¿Î´³¬¹ıÉè¶¨ÊıÁ¿£¬Ôò¼ÌĞø×¥È¡ÏÂÒ»Ò³
             next = soup.find(name='a', string='Next')
             if next and count < self.max_articles_per_feed:
                 url = BaseFeedBook.urljoin(url, next.get('href'))
                 self.ParsePageContent(topic, url, urls, count)
-        # å¦‚æœè¯·æ±‚å¤±è´¥åˆ™æ‰“å°åœ¨æ—¥å¿—è¾“å‡ºä¸­
+        # Èç¹ûÇëÇóÊ§°ÜÔò´òÓ¡ÔÚÈÕÖ¾Êä³öÖĞ
         else:
             self.log.warn('Fetch article failed(%s):%s' % \
                 (URLOpener.CodeMap(result.status_code), url))
 
-    # æ­¤å‡½æ•°è´Ÿè´£åˆ¤æ–­æ–‡ç« æ˜¯å¦è¶…å‡ºæŒ‡å®šæ—¶é—´èŒƒå›´ï¼Œæ˜¯è¿”å› Trueï¼Œå¦åˆ™è¿”å›False
+    # ´Ëº¯Êı¸ºÔğÅĞ¶ÏÎÄÕÂÊÇ·ñ³¬³öÖ¸¶¨Ê±¼ä·¶Î§£¬ÊÇ·µ»Ø True£¬·ñÔò·µ»ØFalse
     def OutTimeRange(self, item):
-        current = datetime.utcnow() # è·å–å½“å‰æ—¶é—´
-        updated = item.find(name='b').string # è·å–æ–‡ç« çš„å‘å¸ƒæ—¶é—´
-        # å¦‚æœè®¾å®šäº†æ—¶é—´èŒƒå›´ï¼Œå¹¶ä¸”è·å–åˆ°äº†æ–‡ç« å‘å¸ƒæ—¶é—´
+        current = datetime.utcnow() # »ñÈ¡µ±Ç°Ê±¼ä
+        updated = item.find(name='b').string # »ñÈ¡ÎÄÕÂµÄ·¢²¼Ê±¼ä
+        # Èç¹ûÉè¶¨ÁËÊ±¼ä·¶Î§£¬²¢ÇÒ»ñÈ¡µ½ÁËÎÄÕÂ·¢²¼Ê±¼ä
         if self.oldest_article > 0 and updated:
-            # å°†æ–‡ç« å‘å¸ƒæ—¶é—´å­—ç¬¦ä¸²è½¬æ¢æˆæ—¥æœŸå¯¹è±¡
+            # ½«ÎÄÕÂ·¢²¼Ê±¼ä×Ö·û´®×ª»»³ÉÈÕÆÚ¶ÔÏó
             updated = datetime.strptime(updated, '%Y-%m-%d %H:%M')
-            delta = current - updated # å½“å‰æ—¶é—´å‡å»æ–‡ç« å‘å¸ƒæ—¶é—´
-            # å°†è®¾å®šçš„æ—¶é—´èŒƒå›´è½¬æ¢æˆç§’ï¼Œå°äºç­‰äº365åˆ™å•ä½ä¸ºå¤©ï¼Œå¦åˆ™åˆ™å•ä½ä¸ºç§’
+            delta = current - updated # µ±Ç°Ê±¼ä¼õÈ¥ÎÄÕÂ·¢²¼Ê±¼ä
+            # ½«Éè¶¨µÄÊ±¼ä·¶Î§×ª»»³ÉÃë£¬Ğ¡ÓÚµÈÓÚ365Ôòµ¥Î»ÎªÌì£¬·ñÔòÔòµ¥Î»ÎªÃë
             if self.oldest_article > 365:
-                threshold = self.oldest_article # ä»¥ç§’ä¸ºå•ä½çš„ç›´æ¥ä½¿ç”¨ç§’
+                threshold = self.oldest_article # ÒÔÃëÎªµ¥Î»µÄÖ±½ÓÊ¹ÓÃÃë
             else:
-                threshold = 86400 * self.oldest_article # ä»¥å¤©ä¸ºå•ä½çš„è½¬æ¢ä¸ºç§’
-            # å¦‚æœæ–‡ç« å‘å¸ƒæ—¶é—´è¶…å‡ºè®¾å®šæ—¶é—´èŒƒå›´è¿”å›True
+                threshold = 86400 * self.oldest_article # ÒÔÌìÎªµ¥Î»µÄ×ª»»ÎªÃë
+            # Èç¹ûÎÄÕÂ·¢²¼Ê±¼ä³¬³öÉè¶¨Ê±¼ä·¶Î§·µ»ØTrue
             if (threshold < delta.days * 86400 + delta.seconds):
                 return True
-        # å¦‚æœè®¾å®šæ—¶é—´èŒƒå›´ä¸º0ï¼Œæ–‡ç« æ²¡è¶…å‡ºè®¾å®šæ—¶é—´èŒƒå›´ï¼ˆæˆ–æ²¡æœ‰å‘å¸ƒæ—¶é—´ï¼‰ï¼Œåˆ™è¿”å›False
+        # Èç¹ûÉè¶¨Ê±¼ä·¶Î§Îª0£¬ÎÄÕÂÃ»³¬³öÉè¶¨Ê±¼ä·¶Î§£¨»òÃ»ÓĞ·¢²¼Ê±¼ä£©£¬Ôò·µ»ØFalse
         return False
 
-    # æ¸…ç†æ–‡ç« URLé™„å¸¦å­—ç¬¦
-    def processtitle(self, title):
-        return title.replace(u' - Chinadaily.com.cn', '')
-
-    # åœ¨æ–‡ç« å†…å®¹è¢«æ­£å¼å¤„ç†å‰åšä¸€äº›é¢„å¤„ç†
-    def preprocess(self, content):
-        # å°†é¡µé¢å†…å®¹è½¬æ¢æˆBeatifulSoupå¯¹è±¡
-        soup = BeautifulSoup(content, 'lxml')
-        # è°ƒç”¨å¤„ç†å†…å®¹åˆ†é¡µçš„è‡ªå®šä¹‰å‡½æ•°SplitJointPagination()
-        content = self.SplitJointPagination(soup)
-        # è¿”å›é¢„å¤„ç†å®Œæˆçš„å†…å®¹
-        return unicode(content)
-
-    # æ­¤å‡½æ•°è´Ÿè´£å¤„ç†æ–‡ç« å†…å®¹é¡µé¢çš„ç¿»é¡µ
-    def SplitJointPagination(self, soup):
-        # å¦‚æœæ–‡ç« å†…å®¹æœ‰ä¸‹ä¸€é¡µåˆ™ç»§ç»­æŠ“å–ä¸‹ä¸€é¡µ
-        next = soup.find(name='a', string='Next')
-        if next:
-            # å«æ–‡ç« æ­£æ–‡çš„æ ‡ç­¾
-            tag = dict(name='div', id='Content')
-            # è·å–ä¸‹ä¸€é¡µçš„å†…å®¹
-            result = self.GetResponseContent(next.get('href'))
-            post = BeautifulSoup(result.content, 'lxml')
-            # å°†ä¹‹å‰çš„å†…å®¹åˆå¹¶åˆ°å½“å‰é¡µé¢
-            soup = BeautifulSoup(unicode(soup.find(**tag)), 'html.parser')
-            soup.contents[0].unwrap()
-            post.find(**tag).append(soup)
-            # ç»§ç»­å¤„ç†ä¸‹ä¸€é¡µ
-            return self.SplitJointPagination(post)
-        # å¦‚æœæœ‰ç¿»é¡µï¼Œè¿”å›æ‹¼æ¥çš„å†…å®¹ï¼Œå¦åˆ™ç›´æ¥è¿”å›ä¼ å…¥çš„â€‹å†…å®¹
-        return soup
-
-    # æ­¤è‡ªå®šä¹‰å‡½æ•°è´Ÿè´£è¯·æ±‚ä¼ ç»™å®ƒçš„é“¾æ¥å¹¶è¿”å›å“åº”å†…å®¹
+    # ´Ë×Ô¶¨Òåº¯Êı¸ºÔğÇëÇó´«¸øËüµÄÁ´½Ó²¢·µ»ØÏìÓ¦ÄÚÈİ
     def GetResponseContent(self, url):
         opener = URLOpener(self.host, timeout=self.timeout, headers=self.extra_header)
         return opener.open(url)
